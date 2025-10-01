@@ -7,3 +7,11 @@ start_button = types.ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+doctor_button = types.ReplyKeyboardMarkup(
+    keyboard= [
+        [types.KeyboardButton(text = "Записаться на приём")],
+        [types.KeyboardButton(text = "Уточнить свою запись")]
+    ],
+    resize_keyboard=True
+)

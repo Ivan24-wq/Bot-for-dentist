@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters.command import Command
 from aiogram.utils.keyboard import KeyboardBuilder
 from button import start_button
+from button import doctor_button
 from dotenv import load_dotenv
 import os
 
@@ -23,8 +24,18 @@ async def cmd_start(message: types.Message):
 
 @dp.message(F.text == "Что вас интересует?")
 async def process_start(message: types.Message):
-    await message.answer("Выберите услугу")
+    await message.answer("Выберите услугу", reply_markup=doctor_button)
     
+#Обработка записи на приём
+@dp.message(F.text == "Записаться на приём")
+async def process_list(message: types.Message):
+    await message.answer("Хорошо, давайте выберем дату")
+
+#Уточняеем запись
+@dp.message(F.text == "Уточнить свою запись")
+async def progress_check(message: types.Message):
+    await message.answer("Введите ваши данные для уточнения записи!")
+
 #Запуск процесса полинга
 async def main():
     await dp.start_polling(bot)
