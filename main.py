@@ -3,8 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters.command import Command
 from aiogram.utils.keyboard import KeyboardBuilder
-from button import start_button
-from button import doctor_button
+from button import start_button, doctor_button, cancel_button
 from dotenv import load_dotenv
 import os
 
@@ -34,7 +33,18 @@ async def process_list(message: types.Message):
 #Уточняеем запись
 @dp.message(F.text == "Уточнить свою запись")
 async def progress_check(message: types.Message):
-    await message.answer("Введите ваши данные для уточнения записи!")
+    await message.answer("Введите ваши данные для уточнения записи!", reply_markup=cancel_button)
+    
+#Обработчик записи
+@dp.message(F.text == "Посмотреть свободные места для записи")
+async def check_places(message: types.Message):
+    await message.answer("Свободные места есть: ")
+    
+#Отмена    
+@dp.callback_query(lambda c: c.data == "cancel")
+async def cancel_place(callback_querty: types.CallbackQuery):
+    await callback_querty.answer("Вы отменили свою запись")
+    await callback_querty.answer()
 
 #Запуск процесса полинга
 async def main():
